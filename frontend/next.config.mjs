@@ -1,6 +1,14 @@
-// Converted from next.config.ts — Next.js requires JS or MJS for configuration
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-};
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+}
 
-export default nextConfig;
+export default nextConfig

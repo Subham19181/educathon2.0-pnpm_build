@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # This is your Python Backend
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    env_file:
+      - ./.env
+    depends_on:
+      - ollama
+
+  # This is your React Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # This is your AI model server
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./ollama_models:/app/models
+
+volumes:
+  ollama_data:
